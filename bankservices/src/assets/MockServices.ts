@@ -3,10 +3,10 @@ import defaultImage from '../assets/default.jpg';
 const mockServices = [
     {
         bank_service_id: 1,
-        title: "ХУЙ",
-        button_text: "пойти нахуй",
-        short_description: "ну и хуйня",
-        description: "пиздец",
+        title: "default",
+        button_text: "default",
+        short_description: "default",
+        description: "default",
         img: "",
         service_status: "действует",
         image: defaultImage,
