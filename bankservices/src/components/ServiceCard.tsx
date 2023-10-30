@@ -23,7 +23,7 @@ const ServiceCard: React.FC<{serviceData: BankService}> = ({serviceData}) => {
         <div className="flip-box-front text-center" style={{ backgroundImage: `url(${serviceData.image})` }}>
         <div className="inner color-white">
             <h3 className="flip-box-header">{serviceData.title}</h3>
-            <img src="https://s25.postimg.cc/65hsttv9b/cta-arrow.png" alt="" className="flip-box-img" />
+            {/* <img src="https://s25.postimg.cc/65hsttv9b/cta-arrow.png" alt="" className="flip-box-img" /> */}
         </div>
         </div>
         <div className="flip-box-back text-center" style={{ backgroundImage: `url(${serviceData.image})` }}>
