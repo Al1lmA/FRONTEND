@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-// import "../styles/stylesForFinePage.css"
 import { GetService } from '../modules/GetService';
 
 interface BankService {
@@ -39,6 +38,8 @@ const Service = () => {
     }
 
     return (
+
+        
         <div className="wrapper">
         <figure className="card">
           <img

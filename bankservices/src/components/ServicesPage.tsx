@@ -5,11 +5,7 @@ import {
 } from '../modules/GetServices.js'
 import ServiceCard from './ServiceCard.js';
 import SearchServices from './Search.js';
-// import SearchFines from './Search.tsx';
-// import "../styles/main_menu.css"
-// import "../styles/search_button.css"
 import "../styles/style.css"
-// import FiltrationGeographicalObject from "./Filtration.tsx";
 
 
 function Services() {
