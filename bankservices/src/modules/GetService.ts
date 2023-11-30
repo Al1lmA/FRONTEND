@@ -26,7 +26,7 @@ export const GetService = async (bank_service_id: number): Promise<BankServiceRe
     try {
         const response = await fetch(`http://127.0.0.1:8000/services/${bank_service_id}/`);
         if (!response.ok) {
-            throw new Error('Запрос незадался!');
+            throw new Error('Запрос не задался!');
         }
         const data: BankService = await response.json();
         return {
