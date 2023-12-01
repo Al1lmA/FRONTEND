@@ -5,8 +5,6 @@ export function useSsid() {
 
     const session_id = cookies.get("session_id");
 
-    
-
     const setSsid = (value: any) => {
         cookies.set("session_id", value,)
     }

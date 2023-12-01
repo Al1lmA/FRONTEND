@@ -1,11 +1,8 @@
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../hooks/useAuth"
-import { useSsid } from "../../hooks/useSsid"
 
 const LoginPage = () => {
-
-    const { session_id } = useSsid()
 
     const {login, auth} = useAuth()
     
@@ -20,7 +17,7 @@ const LoginPage = () => {
         const flag = await login(formData)
         
         if (flag) {
-            navigate("/fines")
+            navigate("/services")
         }
     }
 
@@ -28,7 +25,7 @@ const LoginPage = () => {
         console.log("handleAuth")
         const flag = await auth()
         if(flag){
-            navigate("/fines")
+            navigate("/services")
         }
     }
 
@@ -43,7 +40,7 @@ const LoginPage = () => {
 
             <form onSubmit={handleSubmit}>
 
-                <input type="text" name="userlogin"/>
+                <input type="text" name="login"/>
                 <input type="password" name="password"/>
                 <button type="submit">Войти</button>
 
