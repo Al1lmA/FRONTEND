@@ -7,6 +7,8 @@ import {useDraftRequest} from "../../hooks/useDraftRequest";
 
 import {useAuth} from "../../hooks/useAuth";
 
+import defaultImage from '../../assets/Default.jpg';
+
 
 const ServiceCard = ({service}:{service: any}) => {
 
@@ -22,7 +24,7 @@ const ServiceCard = ({service}:{service: any}) => {
     await deleteRequestFromService(service.id)
   }
 
-  const imageUrl = service.image
+  const imageUrl = service.image || defaultImage
 
   return (
     <>
@@ -36,7 +38,7 @@ const ServiceCard = ({service}:{service: any}) => {
         <img src="https://s25.postimg.cc/65hsttv9b/cta-arrow.png" alt="" className="flip-box-img" />
     </div>
     </div>
-    <div className="flip-box-back text-center" style={{ backgroundImage: `url(${service.image})` }}>
+    <div className="flip-box-back text-center" style={{ backgroundImage: `url(${imageUrl})` }}>
     <div className="inner color-white">
         <h3 className="flip-box-header">{service.title}</h3>
         {/* <p>{serviceData.short_description}</p> */}

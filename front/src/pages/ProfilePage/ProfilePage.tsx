@@ -7,7 +7,7 @@ const ProfilePage = () => {
 
     const navigate = useNavigate()
 
-    const {logOut, user_name} = useAuth()
+    const {logOut, user_name, } = useAuth()
 
     const { resetRequest } = useDraftRequest()
 

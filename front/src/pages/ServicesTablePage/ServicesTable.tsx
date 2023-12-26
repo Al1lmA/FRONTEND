@@ -10,6 +10,7 @@ import { mockServices } from '../../assets/Mock.js';
 import { useAuth } from '../../hooks/useAuth.js';
 
 import CustomButton from '../../components/CustomButton/CustomButton.js';
+import defaultImage from '../../assets/Default.jpg'
 
 const statuses = [
     {
@@ -37,7 +38,7 @@ const ServicesTable = () => {
 
     const searchServices = async () => {
         try {
-            const { data } = await axios(`http://127.0.0.1:8000/services/search`, {
+            const { data } = await axios(`http://127.0.0.1:8000/services`, {
                 method: "GET",
                 headers: {
                     'authorization': session_id
@@ -71,6 +72,9 @@ const ServicesTable = () => {
 
     const data = useMemo(() => services.services, [services.services])
 
+
+  
+
     const columns = useMemo(
         () => [
             // Define columns as per your data
@@ -91,7 +95,7 @@ const ServicesTable = () => {
             {
                 Header: "Изображение",
                 accessor: "image",
-                Cell: ({ value }) => <img src={value} alt="Fine" style={{ width: "100px", height: "auto" }} />
+                Cell: ({ value }) => <img src={value || defaultImage} alt="Service" style={{ width: "100px", height: "auto" }} />
             },
             {
                 Header: "Действия",
@@ -135,8 +139,8 @@ const ServicesTable = () => {
                     searchFines(); }}
                 />
                 </div>
-                <Link to="/fines_edit/add_new">
-                    <CustomButton text="Добавить штраф" />
+                <Link to="/services_edit/add_new">
+                    <CustomButton text="Добавить услугу" />
                 </Link>
             </div>
             <div className="bottom-container">

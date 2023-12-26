@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import "./FineEditPage.scss"
-import { useFine } from "../../hooks/useFine";
+import "./ServiceEdit.scss"
+import { useService } from '../../hooks/useService';
+
 
 
 const statuses: any = {
@@ -12,14 +13,13 @@ const statuses: any = {
 
 const ServiceEdit = () => {
     const { id } = useParams();
-    const FineId = id ? parseInt(id, 10) : null;
-    const { fine, fetchFine, sendFine } = useFine();
+    const ServiceId = id ? parseInt(id, 10) : null;
+    const { service, sendService, fetchService } = useService();
     const [fileData, setFileData] = useState(null); // новое состояние для файла
     const [fineData, setFineData] = useState({
         title: '',
         image: null, // для файла изображения используем null в качестве начального значения
         text: '',
-        price: '',
         status: 'active', // начальное состояние с текстовым значением
     });
 
@@ -29,31 +29,30 @@ const ServiceEdit = () => {
 
     useEffect(() => {
         // Загружаем данные только один раз
-        if (FineId !== null && !isDataFetched) {
-            fetchFine(FineId).then(() => {
+        if (ServiceId !== null && !isDataFetched) {
+            fetchService(ServiceId).then(() => {
                 // после получения данных устанавливаем isDataFetched в true
                 setIsDataFetched(true);
             });
         }
-    }, [FineId, isDataFetched]);
+    }, [ServiceId, isDataFetched]);
 
     useEffect(() => {
         // Обновляем форму, когда данные fine изменились
-        if (fine && isDataFetched) {
+        if (service && isDataFetched) {
             setFineData({
-                title: fine.title || '',
-                image: fine.image || null,
-                text: fine.text || '',
-                price: fine.price || '',
-                status: fine.status ? (fine.status === statuses.active ? 'active' : 'removed') : 'active',
+                title: service.title || '',
+                image: service.image || null,
+                text: service.text || '',
+                status: service.status ? (service.status === statuses.active ? 'active' : 'removed') : 'active',
             });
         }
-    }, [fine, isDataFetched]);
+    }, [service, isDataFetched]);
 
     useEffect(() => {
         // Загружаем данные только один раз
-        if (FineId !== null) {
-            fetchFine(FineId).then(() => {
+        if (ServiceId !== null) {
+            fetchService(ServiceId).then(() => {
                 setIsDataFetched(true);
             });
         }
@@ -110,14 +109,13 @@ const ServiceEdit = () => {
     
         formData.append('title', fineData.title);
         formData.append('text', fineData.text);
-        formData.append('price', fineData.price);
         formData.append('status', statuses[fineData.status]);
     
         if (fileData) {
             formData.append('image', fileData);
         }
     
-        sendFine(FineId, formData).then(() => {
+        sendService(ServiceId, formData).then(() => {
             // navigate("/fines");
             setSubmitSuccess(true);
         });
@@ -132,8 +130,8 @@ const ServiceEdit = () => {
 
     return (
         <div className="container-1">
-            <h1>Редактировать Штраф</h1>
-            {submitSuccess && <div className="submit-success-message">Штраф отредактирован</div>}
+            <h1>Редактировать Услугу</h1>
+            {submitSuccess && <div className="submit-success-message">Услуга отредактирована</div>}
             <form onSubmit={handleSubmit} className="fine-form" encType="multipart/form-data">
                 <label htmlFor="title">Заголовок</label>
                 <input

@@ -16,10 +16,12 @@ const Breadcrumbs = () => {
 
     const topics = {
         "services": "Услуги",
+        "services_edit": "Редактировать Услуги",
         "draft": "Новая заявка",
         "requests": "Заявки",
         "login": "Вход",
-        "profile": "Профиль"
+        "profile": "Профиль",
+        "add_new": "Добавить Услугу"
     }
 
     const crumbs = location.pathname.split('/').filter(crumb => crumb !== '').map(crumb => {
@@ -42,6 +44,22 @@ const Breadcrumbs = () => {
         }
 
         if (currentLink.match(new RegExp('services/(\d*)')))
+        {
+            return (
+                <div className={"crumb"} key={crumb}>
+
+                    <Link to={currentLink}>
+                        {service?.title}
+                    </Link>
+
+                    <FaChevronRight className={"chevron-icon"}/>
+
+                </div>
+            )
+        }
+
+        
+        if (currentLink.match(new RegExp('services_edit/(\d*)')))
         {
             return (
                 <div className={"crumb"} key={crumb}>

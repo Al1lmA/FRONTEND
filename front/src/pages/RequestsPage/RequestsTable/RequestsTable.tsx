@@ -1,6 +1,6 @@
 import {TableInstance, useTable, usePagination} from "react-table"
 import React, {useEffect, useMemo, useState} from "react";
-import "./RequestsTable.sass"
+import "./RequestsTable.scss"
 import axios from "axios";
 import {STATUSES} from "/src/utils/consts";
 import {ru} from "/src/utils/momentLocalization";
@@ -136,7 +136,7 @@ export const RequestsTable = () => {
     
     const handleAccept = async (row: any) => {
         try {
-            const response = await axios(`http://localhost:8000/breaches/${row.original.id}/update_status_admin/`, {
+            const response = await axios(`http://localhost:8000/requests/${row.original.id}/update_status_admin/`, {
                 method: "PUT",
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",
@@ -160,7 +160,7 @@ export const RequestsTable = () => {
 
     const handleReject = async (row: any) => {
         try {
-            const response = await axios(`http://localhost:8000/breaches/${row.original.id}/update_status_admin/`, {
+            const response = await axios(`http://localhost:8000/requests/${row.original.id}/update_status_admin/`, {
                 method: "PUT",
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",

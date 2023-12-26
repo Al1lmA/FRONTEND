@@ -13,6 +13,8 @@ import RequestPage from "./pages/RequestPage/RequestPage.tsx";
 import {QueryClient, QueryClientProvider} from "react-query";
 import Breadcrumbs from "./components/Breadcrumbs/Breadcrumbs";
 import ServicesTable from "./pages/ServicesTablePage/ServicesTable.tsx";
+import ServiceEdit from "./pages/ServiceEditPage/ServiceEdit.tsx";
+import ServiceAdd from "./pages/ServiceAddPage/ServiceAdd.tsx";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -38,7 +40,8 @@ root.render(
                         <Route path="services/" element={<Services/>}/>
                         <Route path="services/:id" element={<Service/>}/>
                         <Route path="services_edit/" element={<ServicesTable/>}/>
-                        <Route path="services_edit/:id" element={<Service/>}/>
+                        <Route path="services_edit/add_new" element={<ServiceAdd/>}/>
+                        <Route path="services_edit/:id" element={<ServiceEdit/>}/>
 
                         <Route path="requests/" element={<Requests/>}/>
                         <Route path="services/draft/" element={<RequestPage/>}/>
