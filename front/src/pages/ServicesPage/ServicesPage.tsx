@@ -35,10 +35,10 @@ const Services = () => {
             setServices(data);
         } catch (error) {
             console.error("Не удалось загрузить данные с сервера.", error);
-            const filteredFines = filterServices(mockServices, titleData);
+            const filteredServices = filterServices(mockServices, titleData);
             setServices({
                 request_id: null,
-                services: filteredFines,
+                services: filteredServices,
             });
         }
     }

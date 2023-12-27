@@ -2,11 +2,11 @@ import defaultImage from '../assets/Default.jpg';
 
 export const mockServices: any[] = [
     {
-      id: 1,
-      title: 'Пример штрафа за проезд на красный свет',
-      text: 'Гибдд',
-      status: 1,
-      image: defaultImage
+        id: 1,
+        title: 'Пример штрафа за проезд на красный свет',
+        text: 'Гибдд',
+        status: 1,
+        image: defaultImage
     },
     {
         id: 2,
@@ -36,4 +36,4 @@ export const mockServices: any[] = [
         status: 1,
         image: defaultImage
     },
-  ];
+];

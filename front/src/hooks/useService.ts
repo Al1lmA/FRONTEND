@@ -35,7 +35,7 @@ export function useService() {
     
             setService(response.data); // Обновляем состояние или что-то в этом роде
         } catch (error) {
-            console.error("Error sending fine data: ", error);
+            console.error("Error sending service data: ", error);
             // Обработка ошибки, если получение ответа или запрос в принципе не удался
         }
     }
@@ -54,7 +54,7 @@ export function useService() {
     
             setService(response.data); // Обновляем состояние или что-то в этом роде
         } catch (error) {
-            console.error("Error sending fine data: ", error);
+            console.error("Error sending service data: ", error);
             // Обработка ошибки, если получение ответа или запрос в принципе не удался
         }
     }

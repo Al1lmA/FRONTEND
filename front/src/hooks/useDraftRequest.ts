@@ -13,7 +13,7 @@ export function useDraftRequest() {
 
     const dispatch = useDispatch()
 
-    const setRequest = (value) => {
+    const setRequest = (value: any) => {
         dispatch(updateRequest(value))
     }
 
@@ -37,7 +37,7 @@ export function useDraftRequest() {
         }
     }
 
-    const addServiceToRequest = async (service_id) => {
+    const addServiceToRequest = async (service_id: any) => {
         const response = await axios(`http://localhost:8000/services/${service_id}/add_to_request/`, {
             method: "POST",
             headers: {
@@ -51,22 +51,22 @@ export function useDraftRequest() {
         }
     }
 
-    const saveRequest = async () => {
-        try {
+    // const saveRequest = async () => {
+    //     try {
 
-            await axios(`http://localhost:8000/requests/${request.id}/update/`, {
-                method: "PUT",
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8",
-                    'authorization': session_id
-                },
-                data: request
-            })
+    //         await axios(`http://localhost:8000/requests/${request.id}/update/`, {
+    //             method: "PUT",
+    //             headers: {
+    //                 "Content-type": "application/json; charset=UTF-8",
+    //                 'authorization': session_id
+    //             },
+    //             data: request
+    //         })
 
-        } catch (e) {
-            console.log(e)
-        }
-    }
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // }
 
     const sendRequest = async () => {
 
@@ -79,7 +79,7 @@ export function useDraftRequest() {
 
         if (response.status == 200)
         {
-            setRequest(undefined)
+            resetRequest()
         }
     }
 
@@ -94,11 +94,11 @@ export function useDraftRequest() {
 
         if (response.status == 200)
         {
-            setRequest(undefined)
+            resetRequest()
         }
     }
 
-    const deleteRequestFromService = async (service_id) => {
+    const deleteRequestFromService = async (service_id: any) => {
         const response = await axios(`http://localhost:8000/requests/${request.id}/delete_service/${service_id}/`, {
             method: "DELETE",
             headers: {
@@ -115,7 +115,6 @@ export function useDraftRequest() {
         request,
         setRequest,
         addServiceToRequest,
-        saveRequest,
         sendRequest,
         deleteRequest,
         deleteRequestFromService,

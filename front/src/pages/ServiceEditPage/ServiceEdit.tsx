@@ -14,6 +14,7 @@ const statuses: any = {
 const ServiceEdit = () => {
     const { id } = useParams();
     const ServiceId = id ? parseInt(id, 10) : null;
+    
     const { service, sendService, fetchService } = useService();
     const [fileData, setFileData] = useState(null); // новое состояние для файла
     const [fineData, setFineData] = useState({

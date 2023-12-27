@@ -12,10 +12,6 @@ const RequestBasket = () => {
 
     return (
         <>
-        {/* <Link to="/requests/draft/" className="lesson-constructor-container" style={{ textDecoration: 'none' }}>
-            <span className="title">Новая заявка</span>
-            {request?.BankServices?.length > 0 && <span className="badge">{request?.BankServices?.length}</span>}
-        </Link> */}
         <Link
         to={request ? "/services/draft/" : "#"}
         onClick={(e) => { if (request == null) e.preventDefault(); }}

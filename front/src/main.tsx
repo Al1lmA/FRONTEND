@@ -37,14 +37,16 @@ root.render(
 
                     <Routes>
                         <Route path="/" element={<Navigate to="/services" replace />} />
+
                         <Route path="services/" element={<Services/>}/>
                         <Route path="services/:id" element={<Service/>}/>
                         <Route path="services_edit/" element={<ServicesTable/>}/>
                         <Route path="services_edit/add_new" element={<ServiceAdd/>}/>
                         <Route path="services_edit/:id" element={<ServiceEdit/>}/>
+                        <Route path="services/draft/" element={<RequestPage/>}/>
 
                         <Route path="requests/" element={<Requests/>}/>
-                        <Route path="services/draft/" element={<RequestPage/>}/>
+                        
                         <Route path="login/" element={<LoginPage/>}/>
                         <Route path="profile/" element={<ProfilePage/>}/>
                     </Routes>
