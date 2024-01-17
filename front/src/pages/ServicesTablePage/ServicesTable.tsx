@@ -11,6 +11,8 @@ import { useAuth } from '../../hooks/useAuth.js';
 
 import CustomButton from '../../components/CustomButton/CustomButton.js';
 import defaultImage from '../../assets/Default.jpg'
+import { useService } from '../../hooks/useService.js';
+import { useFilters } from '../../hooks/useFilters.js';
 
 const statuses = [
     {
@@ -30,28 +32,29 @@ const ServicesTable = () => {
         services:[],
     });
 
-    const [titleData, setTitlePage] = useState<string>("");
+    const { filters, updateTitle } = useFilters();
 
     const { session_id } = useSsid()
 
     const {is_moderator} = useAuth()
 
+    const { sendService } = useService()
     const searchServices = async () => {
         try {
-            const { data } = await axios(`http://127.0.0.1:8000/services`, {
+            const { data } = await axios(`http://127.0.0.1:8000/services/search/`, {
                 method: "GET",
                 headers: {
                     'authorization': session_id
                 },
                 params: {
-                    title: titleData
+                    title: filters.title
                 }
             });
     
             setServices(data);
         } catch (error) {
             console.error("Не удалось загрузить данные с сервера.", error);
-            const filteredFines = filterServices(mockServices, titleData);
+            const filteredFines = filterServices(mockServices, filters.title);
             setServices({
                 request_id: null,
                 services: filteredFines,
@@ -72,6 +75,18 @@ const ServicesTable = () => {
 
     const data = useMemo(() => services.services, [services.services])
 
+    const formData = new FormData();
+    formData.append('status', "2");
+
+    const handleDelete = async (id: any) => {
+        try {
+            await sendService(id, formData);
+            searchServices();
+        } catch (error) {
+            console.error("Произошла ошибка при удалении штрафа", error);
+        }
+    };
+
 
   
 
@@ -83,15 +98,15 @@ const ServicesTable = () => {
                 accessor: "title"
                 // You can also add Cell property here to customize the rendering
             },
-            {
-                Header: "Статус",
-                accessor: "status",
-                Cell: ({ value }) => { 
-                    const statusObject = statuses.find(status => status.id === value);
-                    return statusObject ? statusObject.name : 'Неизвестный статус';
-                }
-                // You can also add Cell property here to customize the rendering
-            },
+            // {
+            //     Header: "Статус",
+            //     accessor: "status",
+            //     Cell: ({ value }) => { 
+            //         const statusObject = statuses.find(status => status.id === value);
+            //         return statusObject ? statusObject.name : 'Неизвестный статус';
+            //     }
+            //     // You can also add Cell property here to customize the rendering
+            // },
             {
                 Header: "Изображение",
                 accessor: "image",
@@ -102,9 +117,12 @@ const ServicesTable = () => {
                 id: "actions",
                 // Cell property может быть функцией, которая принимает объект с данными ячейки
                 Cell: ({ row }) => (
+                    <div>
                     <Link to={`/services_edit/${row.original.id}`}>
                         <CustomButton text="Редактировать"  />
                     </Link>
+                    <CustomButton onClick={() => handleDelete(row.original.id)} text="Удалить" />
+                    </div>
                 )
             },
 
@@ -126,7 +144,7 @@ const ServicesTable = () => {
 
     useEffect(() => {
         searchServices()
-    }, [titleData])
+    }, [filters.title])
 
     return (
         <>
@@ -134,9 +152,9 @@ const ServicesTable = () => {
         <div className="fines-wrapper">
             <div className="top-container">
                 <div className='search_in_menu'>
-                <SearchFines title={titleData} setTitle={(newTitle) => {
-                    setTitlePage(newTitle);
-                    searchFines(); }}
+                <SearchFines title={filters.title} setTitle={(newTitle) => {
+                    updateTitle(newTitle);
+                    searchServices(); }}
                 />
                 </div>
                 <Link to="/services_edit/add_new">

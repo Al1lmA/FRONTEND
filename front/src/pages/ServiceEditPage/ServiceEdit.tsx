@@ -143,7 +143,7 @@ const ServiceEdit = () => {
                     onChange={handleChange}
                 />
 
-                <label htmlFor="status">Статус</label>
+                {/* <label htmlFor="status">Статус</label>
                 <select
                     className="form select"
                     id="status"
@@ -156,7 +156,7 @@ const ServiceEdit = () => {
                             {option.text}
                         </option>
                     ))}
-                </select>
+                </select> */}
 
                 <label htmlFor="image">Картинка</label>
                 <input

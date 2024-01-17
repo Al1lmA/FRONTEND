@@ -176,3 +176,31 @@ form select option:hover {
 }
 
 // Enhanced styles for the date input
+.search-input {
+    padding: 8px 12px; // Отступы вокруг текста внутри поля ввода
+    border: 1px solid #ccc; // Цвет границы
+    border-radius: 4px; // Скругление углов границы
+    font-size: 16px; // Размер шрифта текста в поле ввода
+    line-height: 1.5; // Высота строки текста в поле ввода
+    color: #333; // Цвет текста
+    background-color: #fff; // Цвет фона
+    margin: 5px;
+    width: 250px;
+  
+    &::placeholder { // Стили для текста placeholder
+      color: #888;
+    }
+  
+    &:hover { // Стили при наведении курсора
+      border-color: #888;
+    }
+  
+    &:focus { // Стили для состояния фокусировки на элементе
+      border-color: #0056b3;
+      outline: none; // Удаление стандартного outline, добавленного браузерами
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); // Добавление тени для лучшего выделения активного элемента
+    }
+  
+    // Вы можете добавить дополнительные стили для других состояний или элементов
+  }
+  

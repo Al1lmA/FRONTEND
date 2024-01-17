@@ -1,5 +1,5 @@
 import {TableInstance, useTable, usePagination} from "react-table"
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import "./RequestsTable.scss"
 import axios from "axios";
 import {STATUSES} from "/src/utils/consts";
@@ -7,6 +7,8 @@ import {ru} from "/src/utils/momentLocalization";
 import moment from "moment";
 import {useSsid} from "../../../hooks/useSsid";
 import { useAuth } from "../../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import { useFilters } from "../../../hooks/useFilters";
 
 
 
@@ -17,11 +19,11 @@ const fetchRequestData = async (filters: any, session_id: any, setBreachesData: 
     setIsLoading(true);
     setLoadedOnce(true);
     try {
-      const { startDate, endDate, Status } = filters;
+      const { startDate, endDate, Status, userName } = filters;
       const { data } = await axios("http://localhost:8000/requests/", {
         method: "GET",
         headers: { authorization: session_id },
-        params: { start_date: startDate, end_date: endDate, status: Status },
+        params: { start_date: startDate, end_date: endDate, status: Status},
       });
       setBreachesData(data);
     } catch (e) {
@@ -45,9 +47,21 @@ const fetchRequestData = async (filters: any, session_id: any, setBreachesData: 
         accessor: "rating",
     },
     {
+        Header: "Дата создания",
+        accessor: "created_date",
+        Cell: ({ value }) => { return moment(value).locale(ru()).format("D MMMM HH:mm") }
+    },
+    {
         Header: "Дата формирования",
         accessor: "formated_date",
         Cell: ({ value }) => { return moment(value).locale(ru()).format("D MMMM HH:mm") }
+    },
+    {
+        Header: "Дата окончания",
+        accessor: "closed_date",
+        Cell: ({ value }) => {
+            return value ? moment(value).locale(ru()).format("D MMMM HH:mm") : '';
+        }
     },
     {
         Header: "Статус",
@@ -64,12 +78,10 @@ export const RequestsTable = () => {
     const [breachesData, setBreachesData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [filters, setFilters] = useState({
-      startDate: "",
-      endDate: "",
-      Status: "",
-    });
+    const {filters, updateFilters} = useFilters();
     const [loadedOnce, setLoadedOnce] = useState(false);
+
+    const navigate = useNavigate();
 
     const savedPage = localStorage.getItem('currentPage') || 0;
     const savedPageSize = localStorage.getItem('pageSize') || 5;
@@ -79,6 +91,12 @@ export const RequestsTable = () => {
         const cols = [...staticColumns];
         if (is_moderator) {
           // Append actions column conditionally
+
+          cols.push({
+            Header: "Пользователь",
+            accessor: "user.username",
+          });
+
           cols.push({
             Header: "Действия",
             accessor: "actions",
@@ -86,9 +104,19 @@ export const RequestsTable = () => {
                 if (row.original.status === 2) {
                     return (
                         <div>
-                            <button className="accept-button" onClick={() => handleAccept(row)}>Принять</button>
-                            <button className="reject-button" onClick={() => handleReject(row)}>Отклонить</button>
-                        </div>
+                        <button
+                            className="accept-button"
+                            onClick={(e) => handleAccept(row, e)} // Передайте событие клика
+                        >
+                            Принять
+                        </button>
+                        <button
+                            className="reject-button"
+                            onClick={(e) => handleReject(row, e)} // Передайте событие клика
+                        >
+                            Отклонить
+                        </button>
+                    </div>
                     );
                 }
                 return null;
@@ -134,7 +162,8 @@ export const RequestsTable = () => {
 
 
     
-    const handleAccept = async (row: any) => {
+    const handleAccept = async (row: any, e: any) => {
+        e.stopPropagation();
         try {
             const response = await axios(`http://localhost:8000/requests/${row.original.id}/update_status_admin/`, {
                 method: "PUT",
@@ -158,7 +187,8 @@ export const RequestsTable = () => {
         }
     }
 
-    const handleReject = async (row: any) => {
+    const handleReject = async (row: any, e: any) => {
+        e.stopPropagation();
         try {
             const response = await axios(`http://localhost:8000/requests/${row.original.id}/update_status_admin/`, {
                 method: "PUT",
@@ -183,10 +213,25 @@ export const RequestsTable = () => {
 
     }
 
+    const getFilteredData = useCallback(() => {
+        if (filters.userName !== "") {
+            return breachesData.filter((item) => {
+                // Предполагая, что у item есть вложенный объект user и свойство username. 
+                // Если это не так, нужно будет адаптировать эту логику к вашей структуре данных.
+                return item.user.username.toLowerCase().includes(filters.userName.toLowerCase());
+            });
+        }
+        return breachesData;
+    }, [breachesData, filters.userName]);
+
+    const filteredData = useMemo(() => {
+        return getFilteredData();
+    }, [getFilteredData]);
+
     const tableInstance = useTable(
         {
             columns: COLUMNS,
-            data: breachesData, // Use the fetched data here
+            data: filteredData, // Use the fetched data here
             initialState: { 
               pageIndex: parseInt(savedPage), 
               pageSize: parseInt(savedPageSize) 
@@ -245,7 +290,7 @@ export const RequestsTable = () => {
             formattedValue = moment(value).format("YYYY-MM-DDTHH:mm"); // Обратите внимание на изменение формата
         }
     
-        setFilters({
+        updateFilters({
             ...filters,
             [name]: formattedValue
         });
@@ -255,11 +300,19 @@ export const RequestsTable = () => {
     const handleStatusChange = (event: any) => {
         const { name, value } = event.target;
  
-        setFilters({
+        updateFilters({
             ...filters,
             [name]: value
         });
     
+    };
+
+    const handleInputChange = (event: any) => {
+        const { name, value } = event.target;
+        updateFilters({
+            ...filters,
+            [name]: value
+        });
     };
 
 
@@ -270,22 +323,22 @@ export const RequestsTable = () => {
             <form>
             <input
                 className="date-input"
-                type="datetime-local"
+                type="date"
                 name="startDate"
-                value={filters.startDate}
+                value={filters.startDate.substr(0, 10)}
                 onChange={handleDateChange}
             />
             <input
                 className="date-input"
-                type="datetime-local"
+                type="date"
                 name="endDate"
-                value={filters.endDate}
+                value={filters.endDate.substr(0, 10)}
                 onChange={handleDateChange}
             />
             <select
                 className="status-select"
-                name="Status"
-                value={filters.Status}
+                name="status"
+                value={filters.status}
                 onChange={handleStatusChange}
             >
                   <option value="">Все</option>
@@ -295,6 +348,16 @@ export const RequestsTable = () => {
                       </option>
                   ))}
               </select>
+              {is_moderator && 
+                <input
+                    className="search-input"
+                    type="text"
+                    placeholder="Поиск по имени пользователя"
+                    name="userName"
+                    value={filters.userName}
+                    onChange={handleInputChange} // Обновите значение фильтра при изменении поля ввода
+                />
+            }
             </form>
 
 
@@ -319,7 +382,10 @@ export const RequestsTable = () => {
                     page.map((row, i) => {
                         prepareRow(row)
                         return (
-                            <tr {...row.getRowProps()}>
+                            <tr {...row.getRowProps({
+                                onClick: () => navigate(`/requests/${row.original.id}`),
+                                style: { cursor: 'pointer' } // Опционально, чтобы курсор был в виде руки, показывая, что строка кликабельна.
+                            })}>
                                 {row.cells.map(cell => {
                                     return (
                                         <td {...cell.getCellProps()}>

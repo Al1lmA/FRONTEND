@@ -10,18 +10,24 @@ import {useAuth} from "../../hooks/useAuth";
 import defaultImage from '../../assets/Default.jpg';
 
 
-const ServiceCard = ({service}:{service: any}) => {
+const ServiceCard = ({service, onServiceAction}:{service: any, onServiceAction: (id?: number) => Promise<void>}) => {
 
-  const {is_authenticated, is_moderator} = useAuth()
+  const {is_authenticated } = useAuth()
 
-  const {addServiceToRequest, deleteRequestFromService} = useDraftRequest()
+  const {request, addServiceToRequest, deleteRequestFromService} = useDraftRequest()
 
   const handleAdd = async () => {
     await addServiceToRequest(service.id)
+    if(onServiceAction) {
+      onServiceAction();
+    }
   }
 
   const handleDelete = async () => {
     await deleteRequestFromService(service.id)
+    if (onServiceAction) {
+      onServiceAction(service.id);
+    }
   }
 
   const imageUrl = service.image || defaultImage
@@ -46,9 +52,9 @@ const ServiceCard = ({service}:{service: any}) => {
           <CustomButton text="Подробнее"  />
         </Link>
         <div>
-        {is_authenticated && !location.pathname.includes("draft") && <CustomButton text="Добавить" onClick={handleAdd} /> }
+        {is_authenticated && location.pathname.includes("services") && <CustomButton text="Добавить" onClick={handleAdd} /> }
         </div>
-        {is_authenticated && location.pathname.includes("draft") && <CustomButton text="Удалить" onClick={handleDelete} /> }
+        {request && request.status === 1 && is_authenticated && location.pathname.includes("requests") && <CustomButton text="Удалить" onClick={handleDelete} /> }
       </div>
     </div>
     </div>
