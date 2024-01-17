@@ -19,11 +19,11 @@ const fetchRequestData = async (filters: any, session_id: any, setBreachesData: 
     setIsLoading(true);
     setLoadedOnce(true);
     try {
-      const { startDate, endDate, Status, userName } = filters;
+      const { startDate, endDate, status, userName } = filters;
       const { data } = await axios("http://localhost:8000/requests/", {
         method: "GET",
         headers: { authorization: session_id },
-        params: { start_date: startDate, end_date: endDate, status: Status},
+        params: { start_date: startDate, end_date: endDate, status: status},
       });
       setBreachesData(data);
     } catch (e) {
