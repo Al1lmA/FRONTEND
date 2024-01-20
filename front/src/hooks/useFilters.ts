@@ -11,7 +11,7 @@ export function useFilters() {
   };
 
   const updateTitle = (newTitle: string) => {
-    dispatch(setTitle(newTitle)); // Используйте экшн setTitle из filtersSlice
+    dispatch(setTitle(newTitle));
   };
 
  

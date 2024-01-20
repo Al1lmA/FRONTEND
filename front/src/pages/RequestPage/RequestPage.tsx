@@ -60,7 +60,7 @@ const RequestPage = () => {
 
             <div className="fines-wrapper">
                 <div className="top">
-                    <h3>Услуги в заявке {request && request.rating}</h3>
+                    <h3>Услуги в заявке {request &&  request.status !== 1 && (<h3>Рейтинг БКИ: {request.rating}</h3>)}</h3>
                 </div>
 
                 <div className="bottom">
