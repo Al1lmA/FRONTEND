@@ -9,7 +9,7 @@ export function useDraftRequest() {
 
     const { session_id } = useSsid()
 
-    const request = useSelector(state => state.draftRequest.request);
+    const request = useSelector((state: any) => state.draftRequest.request);
 
     const dispatch = useDispatch()
 

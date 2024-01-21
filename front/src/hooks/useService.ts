@@ -4,7 +4,7 @@ import axios from "axios";
 import { useSsid } from './useSsid';
 
 export function useService() {
-    const service = useSelector(state => state.selectedService.service);
+    const service = useSelector((state: any) => state.selectedService.service);
 
     const dispatch = useDispatch()
     const { session_id } = useSsid()

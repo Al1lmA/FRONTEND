@@ -1,20 +1,13 @@
 import {BrowserRouter, Route, Routes, Navigate} from "react-router-dom";
-import Services from "./pages/ServicesPage/ServicesPage.tsx";
-import Service from "./pages/ServicePage/ServicePage.tsx";
-import Requests from "./pages/RequestsPage/RequestsPage.tsx";
+import Services from "./pages/ServicesPage/ServicesPage.js";
+import Service from "./pages/ServicePage/ServicePage.js";
 import ReactDOM from "react-dom/client";
-import LoginPage from "./pages/LoginPage/LoginPage.tsx";
 import { Provider } from "react-redux";
-import store from "./store/store.ts";
-import ProfilePage from "./pages/ProfilePage/ProfilePage.tsx";
-import Navbar from "./components/Navbar/Navbar.tsx";
+import store from "./store/store.js";
+import Navbar from "./components/Navbar/Navbar.js";
 import "./styles/styles.scss"
-import RequestPage from "./pages/RequestPage/RequestPage.tsx";
 import {QueryClient, QueryClientProvider} from "react-query";
-import Breadcrumbs from "./components/Breadcrumbs/Breadcrumbs";
-import ServicesTable from "./pages/ServicesTablePage/ServicesTable.tsx";
-import ServiceEdit from "./pages/ServiceEditPage/ServiceEdit.tsx";
-import ServiceAdd from "./pages/ServiceAddPage/ServiceAdd.tsx";
+import Breadcrumbs from "./components/Breadcrumbs/Breadcrumbs.js";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -27,29 +20,19 @@ root.render(
 
         <Provider store={store}>
 
-            <BrowserRouter>
+            <BrowserRouter basename='/FRONTEND/'>
 
                 <Navbar />
 
                 <Breadcrumbs />
 
                 <div className="content-wrapper">
-
                     <Routes>
                         <Route path="/" element={<Navigate to="/services" replace />} />
 
                         <Route path="services/" element={<Services/>}/>
                         <Route path="services/:id" element={<Service/>}/>
-                        <Route path="services_edit/" element={<ServicesTable/>}/>
-                        <Route path="services_edit/add_new" element={<ServiceAdd/>}/>
-                        <Route path="services_edit/:id" element={<ServiceEdit/>}/>
-                        
 
-                        <Route path="requests/" element={<Requests/>}/>
-                        <Route path="requests/:id" element={<RequestPage/>}/>
-                        
-                        <Route path="login/" element={<LoginPage/>}/>
-                        <Route path="profile/" element={<ProfilePage/>}/>
                     </Routes>
 
                 </div>

@@ -14,7 +14,7 @@ const Breadcrumbs = () => {
 
     const resetSelectedSpare = () => setService(undefined)
 
-    const topics = {
+    const topics: any= {
         "services": "Услуги",
         "services_edit": "Редактировать Услуги",
         "draft": "Новая заявка",
@@ -24,7 +24,7 @@ const Breadcrumbs = () => {
         "add_new": "Добавить Услугу"
     }
 
-    const crumbs = location.pathname.split('/').filter(crumb => crumb !== '').map(crumb => {
+    const crumbs: any = location.pathname.split('/').filter(crumb => crumb !== '').map(crumb => {
 
         currentLink += `/${crumb}`
 

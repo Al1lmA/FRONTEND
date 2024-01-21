@@ -76,7 +76,7 @@ const Services = () => {
             </div>
 
             <div className="bottom-container">
-                {servicesList.services.map((service) => {
+                {servicesList.services.map((service: any) => {
                     return <ServiceCard service={service} key={service.id} onServiceAction={searchServices}/>
                 })}
             </div>

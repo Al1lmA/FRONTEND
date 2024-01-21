@@ -2,12 +2,13 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import "./ServicePage.css"
 import {useService} from "../../hooks/useService";
+import { mockServices } from '../../assets/Mock';
 
 const ServicePage = () => {
     const { id } = useParams(); // Получаем значение параметра :id из URL
-    const ServiceId = id ? parseInt(id, 10) : null; // Преобразование в число или null
+    const ServiceId = id ? parseInt(id, 10) : 0; // Преобразование в число или null
 
-    const {service, fetchService} = useService()
+    const {service, fetchService, setService} = useService()
 
     useEffect(() => {
         if (ServiceId !== null) {
@@ -16,7 +17,12 @@ const ServicePage = () => {
     }, [ServiceId]);
 
     if (!service) {
-        return <div>Loading...</div>;
+      const mockService = mockServices.find(service => service.id === ServiceId);
+      if (mockService) {
+          setService(mockService);
+      } else {
+          return <div>Услуга не найдена</div>;
+      }
     }
 
     return (
