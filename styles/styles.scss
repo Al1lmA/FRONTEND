@@ -1,0 +1,50 @@
+
+
+
+:root {
+    /* Base font size */
+    font-size: 15px;
+
+    // /* Heading height variable*/ 
+    // --heading-height: 0.1em;  --color-primary: hsl(310, 100%, 65%);
+    // --color-secondary: hsl(160, 100%, 65%);
+    // --background: hsl(230, 100%, 78%);
+    // --text: hsl(310, 100%, 95%);
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+h1 {
+    font-size: calc(1.9em + 1.9vw);
+    font-weight: 700;
+    letter-spacing: .01em;
+    padding: 1rem 0 0 4.5rem;
+    text-shadow: .022em .022em .022em #e7e5e5;
+    color: #fff;
+}
+
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    min-height: 0hv;
+    width: 100%;
+    background: rgb(170, 199, 255);
+
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    flex-wrap: wrap;
+    width: 80vw;
+}
