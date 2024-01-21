@@ -20,7 +20,7 @@ root.render(
 
         <Provider store={store}>
 
-            <BrowserRouter basename='/FRONTEND/'>
+            <BrowserRouter basename="/FRONTEND/">
 
                 <Navbar />
 
