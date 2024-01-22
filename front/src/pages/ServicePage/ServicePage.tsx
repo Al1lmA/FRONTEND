@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import "./ServicePage.css"
 import {useService} from "../../hooks/useService";
+import defaultImage from '../../assets/Default.jpg';
 
 const ServicePage = () => {
     const { id } = useParams(); // Получаем значение параметра :id из URL
@@ -19,13 +20,15 @@ const ServicePage = () => {
         return <div>Loading...</div>;
     }
 
+    const imageUrl = service.image || defaultImage
+
     return (
     <>
         <div className="wrapper">
         <figure className="card">
           <img
             className="img-order"
-            src={service.image}
+            src={imageUrl}
             width="640"
             height="640"
             alt=""

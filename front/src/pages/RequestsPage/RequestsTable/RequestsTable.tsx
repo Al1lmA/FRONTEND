@@ -321,20 +321,26 @@ export const RequestsTable = () => {
         <div className="table-wrapper">
 
             <form>
-            <input
-                className="date-input"
-                type="date"
-                name="startDate"
-                value={filters.startDate.substr(0, 10)}
-                onChange={handleDateChange}
-            />
-            <input
-                className="date-input"
-                type="date"
-                name="endDate"
-                value={filters.endDate.substr(0, 10)}
-                onChange={handleDateChange}
-            />
+            <div className="date-wrapper">
+                {/* <label className="date-label">От:</label> */}
+                <input
+                    className="date-input"
+                    type="date" // измените на 'date'
+                    name="startDate"
+                    value={filters.startDate.substr(0, 10)} // обрезать время, если оно есть
+                    onChange={handleDateChange}
+                />
+            </div>
+            <div className="date-wrapper">
+                {/* <label className="date-label">До:</label> */}
+                <input
+                    className="date-input"
+                    type="date" // измените на 'date'
+                    name="endDate"
+                    value={filters.endDate.substr(0, 10)} // обрезать время, если оно есть
+                    onChange={handleDateChange}
+                />
+            </div>
             <select
                 className="status-select"
                 name="status"

@@ -15,6 +15,7 @@ import Breadcrumbs from "./components/Breadcrumbs/Breadcrumbs";
 import ServicesTable from "./pages/ServicesTablePage/ServicesTable.tsx";
 import ServiceEdit from "./pages/ServiceEditPage/ServiceEdit.tsx";
 import ServiceAdd from "./pages/ServiceAddPage/ServiceAdd.tsx";
+import RegistrationPage from "./pages/RegictrationPage/RegistrationPage.tsx";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -50,6 +51,7 @@ root.render(
                         
                         <Route path="login/" element={<LoginPage/>}/>
                         <Route path="profile/" element={<ProfilePage/>}/>
+                        <Route path="registration/" element={<RegistrationPage/>}/>
                     </Routes>
 
                 </div>

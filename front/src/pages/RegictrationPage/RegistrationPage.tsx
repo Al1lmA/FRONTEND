@@ -1,12 +1,12 @@
 import { useEffect } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { useAuth } from "../../hooks/useAuth"
-import "./LoginPage.css"
+import "./RegistrationPage.css"
 
-const LoginPage = () => {
+const RegistrationPage = () => {
 
 
-    const {login, auth} = useAuth()
+    const {registration, auth} = useAuth()
     
     const navigate = useNavigate()
 
@@ -16,7 +16,7 @@ const LoginPage = () => {
 
         const formData = new FormData(e.target as HTMLFormElement)
 
-        const flag = await login(formData)
+        const flag = await registration(formData)
         
         if (flag) {
             navigate("/services")
@@ -43,7 +43,7 @@ const LoginPage = () => {
        
            <div className="content"> 
        
-            <h2>Вход</h2> 
+            <h2>Регистрация</h2> 
        
             <form className="form" onSubmit={handleSubmit}> 
        
@@ -59,9 +59,9 @@ const LoginPage = () => {
         
                 </div>
     
-                <button className="EntButton" type="submit">Вход</button> 
-                <Link className="Link" to={`/registration`}>
-                    <button className="EntButton" type="submit">Регистрация</button>
+                <button className="EntButton" type="submit">Зарегистрироваться</button> 
+                <Link className="LinkR" to={`/login`}>
+                    <button className="EntButton" type="submit">Войти</button>
                 </Link>
             </form> 
        
@@ -73,4 +73,4 @@ const LoginPage = () => {
     )
 }
 
-export default LoginPage;
+export default RegistrationPage;

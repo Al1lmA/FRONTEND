@@ -21,7 +21,8 @@ const Breadcrumbs = () => {
         "requests": "Заявки",
         "login": "Вход",
         "profile": "Профиль",
-        "add_new": "Добавить Услугу"
+        "add_new": "Добавить Услугу",
+        "registration": "Регистрация"
     }
 
     const crumbs = location.pathname.split('/').filter(crumb => crumb !== '').map(crumb => {
